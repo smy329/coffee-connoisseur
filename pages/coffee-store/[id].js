@@ -63,7 +63,7 @@ const CoffeeStore = (initialProps) => {
         body: JSON.stringify({
           id,
           name,
-          voting: 1,
+          voting: 0,
           imgUrl,
           neighbourhood: neighbourhood || "",
           address: address || "",
@@ -106,7 +106,7 @@ const CoffeeStore = (initialProps) => {
 
   useEffect(() => {
     console.log("inside use effect")
-    if (data ) {
+    if (data && data.length > 0) {
       console.log("data from SWR", data);
       setCoffeeStore(data[0]);
       setVotingCount(data[0].voting);

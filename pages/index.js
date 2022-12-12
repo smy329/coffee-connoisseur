@@ -31,33 +31,34 @@ export default function Home(props) {
 
   console.log({ latLong, locationErrorMsg });
 
-    useEffect(() => {
-      const setCoffeeStoresByLocation = async () => {
-        if (latLong) {
-          try {
-            const response = await fetch(
-              `/api/getCoffeeStoresByLocation?latLong=${latLong}&limit=30`
-            );
+  useEffect(() => {
+    const setCoffeeStoresByLocation = async () => {
+      if (latLong) {
+        console.log("found latlong")
+        try {
+          const response = await fetch(
+            `/api/getCoffeeStoresByLocation?latLong=${latLong}&limit=30`
+          );
 
-            const coffeeStores = await response.json();
+          const coffeeStores = await response.json();
 
-            // setCoffeeStores(fetchedCoffeeStores);
-            dispatch({
-              type: ACTION_TYPES.SET_COFFEE_STORES,
-              payload: {
-                coffeeStores,
-              },
-            });
-            setCoffeeStoresError("");
-            //set coffee stores
-          } catch (error) {
-            //set error
-            setCoffeeStoresError(error.message);
-          }
+          // setCoffeeStores(fetchedCoffeeStores);
+          dispatch({
+            type: ACTION_TYPES.SET_COFFEE_STORES,
+            payload: {
+              coffeeStores,
+            },
+          });
+          setCoffeeStoresError("");
+          //set coffee stores
+        } catch (error) {
+          //set error
+          setCoffeeStoresError(error.message);
         }
-      };
-      setCoffeeStoresByLocation();
-    }, [latLong, dispatch]);
+      }
+    };
+    setCoffeeStoresByLocation();
+  }, [latLong, dispatch]);
 
   const handleOnBannerBtnClick = () => {
     console.log("hi banner button");
@@ -76,8 +77,8 @@ export default function Home(props) {
           handleOnClick={handleOnBannerBtnClick}
         />
 
-        {locationErrorMsg && <p>Something went wrong: {locationErrorMsg}</p>}
-        {coffeeStoresError && <p>Something went wrong: {coffeeStoresError}</p>}
+        {locationErrorMsg && <p>Something went wrong with location: {locationErrorMsg}</p>}
+        {coffeeStoresError && <p>Something went wrong coffee stores: {coffeeStoresError}</p>}
         <div className={styles.heroImage}>
           <Image
             src="/static/hero-image.png"
